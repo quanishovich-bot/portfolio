@@ -1,0 +1,81 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Hero } from './components/Hero';
+import { TerminalComponent } from './components/Terminal';
+import { Projects } from './components/Projects';
+import { Workflow } from './components/Workflow';
+import { Pricing } from './components/Pricing';
+import { Contact } from './components/Contact';
+import { SoundProvider } from './context/SoundContext';
+import { CustomCursor } from './components/CustomCursor';
+import { FloatingControls } from './components/FloatingControls';
+import { LiveStats } from './components/LiveStats';
+import { TechMarquee } from './components/TechMarquee';
+import { Reviews } from './components/Reviews';
+import { FAQ } from './components/FAQ';
+import { EasterEgg } from './components/EasterEgg';
+import { Preloader } from './components/Preloader';
+import { BigFooter } from './components/BigFooter';
+
+export default function App() {
+  const [eggClicks, setEggClicks] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  return (
+    <SoundProvider>
+      <AnimatePresence mode="wait">
+        {isLoading && <Preloader key="preloader" onComplete={() => setIsLoading(false)} />}
+      </AnimatePresence>
+
+      {!isLoading && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="min-h-screen bg-[var(--color-dark)] text-white selection:bg-white selection:text-black"
+        >
+          <div className="crt-overlay"></div>
+          <CustomCursor />
+          <FloatingControls />
+          <EasterEgg triggerCount={eggClicks} />
+          
+          {/* Background Glow */}
+          <div 
+            className="fixed inset-0 z-0 pointer-events-none opacity-40" 
+            style={{ 
+              backgroundImage: 'radial-gradient(circle at 50% -20%, rgba(255,255,255,0.1) 0%, transparent 70%)', 
+            }}
+          ></div>
+          
+          <div className="relative z-10">
+            <Hero onLogoClick={() => setEggClicks(prev => prev + 1)} />
+            
+            <TechMarquee />
+            <LiveStats />
+            
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+              <TerminalComponent />
+            </div>
+            
+            <Projects />
+            <Workflow />
+            <Pricing />
+            
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+              <Reviews />
+              <FAQ />
+              <Contact />
+            </div>
+            
+            <BigFooter />
+          </div>
+        </motion.div>
+      )}
+    </SoundProvider>
+  );
+}
