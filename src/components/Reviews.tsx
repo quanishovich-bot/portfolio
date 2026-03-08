@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { Eye, Share, MessageCircle, ExternalLink } from 'lucide-react';
 import { useSound } from '../context/SoundContext';
+import { Typewriter } from './Typewriter';
 
 const reviews = [
   { 
@@ -37,7 +38,7 @@ export function Reviews() {
       <div className="flex items-center gap-4 mb-16">
         <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">Отзывы</h2>
         <div className="h-px bg-white/20 flex-1"></div>
-        <span className="text-gray-500 font-mono text-sm hidden sm:block">/ feedback.log</span>
+        <Typewriter text="/ feedback.log" className="text-gray-500 font-mono text-sm hidden sm:block" />
       </div>
 
       <div className="max-w-2xl mx-auto space-y-6">

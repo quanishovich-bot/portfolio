@@ -1,8 +1,22 @@
 import { motion } from 'motion/react';
 import { useSound } from '../context/SoundContext';
+import { useState, useRef } from 'react';
 
 export function Hero({ onLogoClick }: { onLogoClick: () => void }) {
   const { playHover } = useSound();
+  const [isGlitching, setIsGlitching] = useState(false);
+  const glitchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = () => {
+    glitchTimeoutRef.current = setTimeout(() => {
+      setIsGlitching(true);
+    }, 3000);
+  };
+
+  const handleMouseLeave = () => {
+    if (glitchTimeoutRef.current) clearTimeout(glitchTimeoutRef.current);
+    setIsGlitching(false);
+  };
 
   const scrollToProjects = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -74,9 +88,12 @@ export function Hero({ onLogoClick }: { onLogoClick: () => void }) {
         
         <div className="w-full flex justify-center px-4">
           <h1 
-            className="text-[13vw] sm:text-[14vw] md:text-[15vw] font-black leading-none text-white whitespace-nowrap select-none cursor-pointer"
+            className={`text-[13vw] sm:text-[14vw] md:text-[15vw] font-black leading-none text-white whitespace-nowrap select-none cursor-pointer ${isGlitching ? 'glitch-text' : ''}`}
             style={{ transform: 'scaleX(1.1)', transformOrigin: 'center' }}
             onClick={onLogoClick}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            data-text="ADIXXLEE"
           >
             ADIXXLEE
           </h1>

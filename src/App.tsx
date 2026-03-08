@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Hero } from './components/Hero';
 import { TerminalComponent } from './components/Terminal';
@@ -21,10 +21,24 @@ import { FAQ } from './components/FAQ';
 import { EasterEgg } from './components/EasterEgg';
 import { Preloader } from './components/Preloader';
 import { BigFooter } from './components/BigFooter';
+import { InteractiveTerminal } from './components/InteractiveTerminal';
+import { MatrixRain } from './components/MatrixRain';
 
 export default function App() {
   const [eggClicks, setEggClicks] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const asciiArt = `
+   ___    ____  _______  ___  __  __    ____________
+  /   |  / __ \\/  _/| |/ / |/ / / /   / ____/ ____/
+ / /| | / / / // /  |   /|   / / /   / __/ / __/   
+/ ___ |/ /_/ // /  /   |/   | / /___/ /___/ /___   
+/_/  |_/_____/___/ /_/|_/_/|_|/_____/_____/_____/   
+    `;
+    console.log(`%c${asciiArt}`, 'color: #2AABEE; font-weight: bold;');
+    console.log("%cЛюбишь смотреть под капот? Давай работать вместе. Напиши мне в ТГ кодовое слово 'CONSOLE' и получи скидку 10% на первый заказ.", "color: #fff; font-size: 14px; background: #182533; padding: 10px; border-radius: 5px; border: 1px solid #2AABEE;");
+  }, []);
 
   return (
     <SoundProvider>
@@ -39,6 +53,8 @@ export default function App() {
           transition={{ duration: 1 }}
           className="min-h-screen bg-[var(--color-dark)] text-white selection:bg-white selection:text-black"
         >
+          <MatrixRain />
+          <InteractiveTerminal />
           <div className="crt-overlay"></div>
           <CustomCursor />
           <FloatingControls />
